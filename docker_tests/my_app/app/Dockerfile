@@ -4,12 +4,13 @@ WORKDIR /app
 
 COPY . /app
 
-RUN apk add --no-cache python3 py3-pip \
-python3 -m venv /opt/venv \
-pip install Flask \
-apk cache clean
-
 ENV PATH="/opt/venv/bin:$PATH"
+
+RUN apk add --no-cache python3 py3-pip 
+RUN python3 -m venv /opt/venv
+RUN pip install Flask
+RUN apk cache clean
+
 
 EXPOSE 5000
 

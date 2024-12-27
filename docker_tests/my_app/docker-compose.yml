@@ -2,6 +2,6 @@ version: "3"
 
 services:
   myapp:
-    image: myapp
+    build: app
     ports:
       - 5000:5000
