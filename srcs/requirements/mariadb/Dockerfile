@@ -14,5 +14,4 @@ ENV MYSQL_ROOT_PASSWORD=secret
 
 EXPOSE 3306
 
-CMD [ "mariadbd" ]
 # CMD [ "rc-service", "mariadb", "start" ]

@@ -1,21 +1,23 @@
 services:
   mariadb:
-    image: mysql:5.7
+    build: requirements/mariadb
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=somewordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
+    networks:
+      - server
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=somewordpress
+    #   - MYSQL_DATABASE=wordpress
+    #   - MYSQL_USER=wordpress
+    #   - MYSQL_PASSWORD=wordpress
     # ports:
     #   - 3306:3306
-    volumes:
-      - db:/var/lib/databse
+    # volumes:
+    #   - db:/var/lib/databse
 
   wordpress:
     depends_on:
       - mariadb
-    image: wordpress
+    build: requirements/wordpress
     # environment:
     #   - WORDPRESS_DB_HOST=mariadb:3306
     #   - WORDPRESS_DB_USER=wordpress
@@ -23,22 +25,26 @@ services:
     #   - WORDPRESS_DB_NAME=wordpress
     networks:
       - server
-      - db
-    ports:
+    # ports:
       # - 3306:3306
-      - 9000:9000
-      - 8080:80
+      # - 9000:9000
+      # - 8080:80
     
   nginx:
-    image: nginx
+    build: requirements/nginx
     depends_on:
       - mariadb
       - wordpress
-    ports:
-      - 9000:9000
-      - 443:443
+    # ports:
+    #   - 9000:9000
+    #   - 443:443
     networks:
       - server
 
-volumes:
-  db: {}
+networks:
+  server:
+    driver: bridge
+
+
+# volumes:
+#   db: {}
