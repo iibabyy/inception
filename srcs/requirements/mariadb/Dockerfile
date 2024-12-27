@@ -1,10 +1,18 @@
-FROM mariadb
+FROM alpine:3.20
 
-WORKDIR /var/www/db
+WORKDIR /var/lib/mysql
 
-COPY . /var/www/db
+COPY . /var/lib/mysql
 
 RUN apk update \
-apk cache cleandocker 
+&& apk add mariadb \
+&& apk cache clean
+# && apk add mariadb \
+
+ENV MYSQL_PASSWORD=password
+ENV MYSQL_ROOT_PASSWORD=secret
 
 EXPOSE 3306
+
+CMD [ "mariadbd" ]
+# CMD [ "rc-service", "mariadb", "start" ]

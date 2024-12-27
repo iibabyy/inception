@@ -1,6 +1,7 @@
 services:
   mariadb:
     image: mysql:5.7
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=somewordpress
       - MYSQL_DATABASE=wordpress
@@ -9,31 +10,35 @@ services:
     # ports:
     #   - 3306:3306
     volumes:
-      - database:/var/lib/databse
+      - db:/var/lib/databse
 
   wordpress:
     depends_on:
       - mariadb
     image: wordpress
-    environment:
-      - WORDPRESS_DB_HOST=mariadb:3306
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
+    # environment:
+    #   - WORDPRESS_DB_HOST=mariadb:3306
+    #   - WORDPRESS_DB_USER=wordpress
+    #   - WORDPRESS_DB_PASSWORD=wordpress
+    #   - WORDPRESS_DB_NAME=wordpress
+    networks:
+      - server
+      - db
     ports:
       # - 3306:3306
+      - 9000:9000
       - 8080:80
     
-  # nginx:
-  #   image: nginx
-  #   depends_on:
-  #     - mariadb
-  #     - wordpress
-  #   ports:
-  #     - 9000:9000
-  #     - 443:443
-  #   networks:
-  #     - server
+  nginx:
+    image: nginx
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - 9000:9000
+      - 443:443
+    networks:
+      - server
 
 volumes:
-  database: {}
+  db: {}
