@@ -1,14 +1,13 @@
-FROM alpine:3.20
+FROM nginx:stable-alpine
 
-WORKDIR /var/www/nginx
+# WORKDIR /var/www/nginx
 
-COPY . /var/www/nginx
+# COPY . /var/www/nginx
 
-RUN apk update \
-&& apk cache clean
+RUN docker-php-ext-install mysqli
 # && apk add nginx \
 
-EXPOSE 9000
-EXPOSE 443
+# EXPOSE 9000
+# EXPOSE 443
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
