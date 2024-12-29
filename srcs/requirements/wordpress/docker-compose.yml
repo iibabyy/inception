@@ -1,0 +1,32 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    env_file:
+      - ../../.env
+    expose:
+      - 3306
+    volumes:
+      - ./database:/var/lib/mariadb
+    networks:
+      - wpnetwork
+
+  wordpress:
+    build: Dockerfile
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    env_file: ../../.env
+    ports:
+      - 8080:9000
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    networks:
+      - wpnetwork
+
+networks:
+  wpnetwork:
+    driver: bridge
+
+volumes:
+  wordpress: {}

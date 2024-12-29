@@ -2,23 +2,24 @@ FROM debian:stable
 
 RUN apt update  \
 && apt -y upgrade \
-&& apt install -y php \
+&& apt install -y php8.2 \
 && apt install -y php-fpm \
 && apt install -y php-mysql \
 && apt install -y default-mysql-client \
 && apt install -y mariadb-client \
 && apt install -y wget \
-&& wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/ \
-&& tar -xzf /var/www/wordpress-6.1.1.tar.gz \
-&& rm /var/www/wordpress-6.1.1.tar.gz /var/www/html -rf \
-&& mv /var/www/wordpress /var/www/html
+&& cd /var/www/html \
+&& wget https://wordpress.org/latest.tar.gz \
+&& tar -xzf latest.tar.gz \
+&& rm latest.tar.gz -rf
 
-ENV DOMAIN_NAME="ibaby"
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+&& chmod +x wp-cli.phar \
+&& mv wp-cli.phar /usr/local/bin/wp
 
-WORKDIR /app
-
-COPY . /app
+WORKDIR /var/www/html/wordpress
 
 EXPOSE 9000
 
-# ENTRYPOINT [ "?" ]
+COPY ./tools/init_wp.sh /
+ENTRYPOINT [ "bash", "/init_wp.sh" ]
