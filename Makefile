@@ -1,9 +1,9 @@
-all: network_up up
+all: up
 
 up:
 	@docker compose -f srcs/docker-compose.yml up --build
 
-down: network_down
+down:
 	@docker compose -f srcs/docker-compose.yml down
 
 d: network_up
@@ -23,3 +23,6 @@ network_up:
 
 network_down:
 	docker network rm wpnetwork
+
+clean:
+	docker system prune --all

@@ -1,13 +1,11 @@
 services:
   mariadb:
-    image: mariadb:latest
+    build: requirements/mariadb/
     container_name: mariadb
     env_file:
       - .env
-    expose:
-      - 3306
     volumes:
-      - ./database:/var/lib/mysql
+      - /home/$USER/data/mysql:/var/lib/mysql
     networks:
       - wpnetwork
 
@@ -19,8 +17,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - wordpress:/var/www/html
+      - /home/$USER/data/wordpress:/var/www/html
     networks:
       - wpnetwork
 
@@ -31,7 +28,7 @@ services:
     container_name: wordpress
     env_file: .env
     volumes:
-      - wordpress:/var/www/html
+      - /home/$USER/data/wordpress:/var/www/html
     networks:
       - wpnetwork
 
@@ -40,4 +37,7 @@ networks:
     driver: bridge
 
 volumes:
-  wordpress: {}
+  wordpress:
+    driver: local
+  mysql:
+    driver: local

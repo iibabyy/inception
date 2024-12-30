@@ -1,17 +1,15 @@
-FROM alpine:3.20
+FROM debian:bullseye
 
-WORKDIR /var/lib/mysql
 
-COPY . /var/lib/mysql
+RUN apt update \
+&& apt upgrade -y \
+&& apt install -y mariadb-server \
+&& mkdir -p /run/mysqld \
+&& chown -R mysql:mysql /run/mysqld
 
-RUN apk update \
-&& apk add mariadb \
-&& apk cache clean
-# && apk add mariadb \
+COPY ./tools/init_db.sh /
+COPY ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-ENV MYSQL_PASSWORD=password
-ENV MYSQL_ROOT_PASSWORD=secret
+RUN chmod +x /init_db.sh
 
-EXPOSE 3306
-
-# CMD [ "rc-service", "mariadb", "start" ]
+ENTRYPOINT [ "bash", "/init_db.sh" ]

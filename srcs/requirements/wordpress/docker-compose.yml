@@ -7,7 +7,7 @@ services:
     expose:
       - 3306
     volumes:
-      - ./database:/var/lib/mariadb
+      - mariadb:/var/lib/mariadb
     networks:
       - wpnetwork
 
@@ -27,6 +27,3 @@ services:
 networks:
   wpnetwork:
     driver: bridge
-
-volumes:
-  wordpress: {}
