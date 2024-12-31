@@ -4,7 +4,7 @@
 exec mysqld_safe &
 
 until mysqladmin ping >/dev/null 2>&1; do
-	echo "WAIT FOR PONG..."
+	echo "WAITING FOR MYSQLQADMIN..."
     sleep 1
 done
 

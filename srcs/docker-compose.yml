@@ -4,8 +4,8 @@ services:
     container_name: mariadb
     env_file:
       - .env
-    volumes:
-      - /home/$USER/data/mysql:/var/lib/mysql
+    # volumes:
+    #   - /home/$USER/data/mysql:/var/lib/mysql
     networks:
       - wpnetwork
 

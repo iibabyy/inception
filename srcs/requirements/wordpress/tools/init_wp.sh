@@ -11,8 +11,8 @@ wp_init() {
 			--dbname="$MYSQL_DATABASE" \
 			--dbpass="$MYSQL_PASSWORD" \
 			--dbuser="$MYSQL_USER" \
-			--dbhost="mariadb" \
-			--url="http://$DOMAIN_NAME" || exit 1
+			--dbhost="$WP_DB_HOST" \
+			--url="http://$DOMAIN_NAME";
 
 
 		echo "Installing WordPress..."
@@ -22,16 +22,13 @@ wp_init() {
 			--admin_password="$ADMIN_PASSWORD" \
 			--admin_email="$ADMIN_EMAIL" \
 			--url="http://$DOMAIN_NAME" \
-			--skip-email || exit 1
+			--skip-email;
 
 		echo "Creating new user..."
 			wp user create --allow-root \
 			"$USER_LOGIN" "$USER_EMAIL" \
 			--role=author \
-			--user_pass="$USER_PASSWORD" || exit 1
-	else
-		echo "wp-config.php already installed..."
-
+			--user_pass="$USER_PASSWORD";
 	fi
 }
 
@@ -48,6 +45,10 @@ wait_for_db() {
 wait_for_db
 
 wp_init
+
+if [ ! -d /run/php ]; then
+	mkdir /run/php;
+fi
 
 exec php-fpm7.4 --nodaemonize --allow-to-run-as-root
 loop
