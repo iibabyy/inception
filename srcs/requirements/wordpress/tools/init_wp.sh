@@ -2,15 +2,15 @@
 
 wp_init() {
 	# 	mkdir -p /var/www/html/wordpress
-	cd /var/www/html/wordpress || exit 1
+	cd /var/www/html/wordpress
 
 	if ! wp core is-installed --allow-root; then
 
 		echo "Creating wp-config.php..."
 		wp config create --allow-root \
-			--dbname="$MYSQL_DATABASE" \
-			--dbpass="$MYSQL_PASSWORD" \
-			--dbuser="$MYSQL_USER" \
+			--dbname="$SQL_DATABASE" \
+			--dbpass="$SQL_PASSWORD" \
+			--dbuser="$SQL_USER" \
 			--dbhost="$WP_DB_HOST" \
 			--url="http://$DOMAIN_NAME";
 
@@ -34,7 +34,7 @@ wp_init() {
 
 wait_for_db() {
     echo "Waiting for database connection..."
-    until mysql -h "mariadb" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&1; do
+    until mysql -h "mariadb" -u "$SQL_USER" -p"$SQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&1; do
         echo "Database is not ready. Retrying in 5 seconds..."
         sleep 5
     done
