@@ -1,34 +1,38 @@
 services:
   mariadb:
+    image: mariadb:v1
     build: requirements/mariadb/
     container_name: mariadb
     env_file:
       - .env
-    # volumes:
-    #   - /home/$USER/data/mysql:/var/lib/mysql
+    restart: always
+    volumes:
+      - mysql:/var/lib/mysql
     networks:
       - wpnetwork
 
   nginx:
-    image: nginx:1.15.12-alpine
+    image: nginx:v1
+    build: requirements/nginx
     container_name: nginx
     depends_on:
       - wordpress
     ports:
-      - 8080:80
+      - 443:443
     volumes:
-      - /home/$USER/data/wordpress:/var/www/html
+      - wordpress:/var/www/html
     networks:
       - wpnetwork
 
   wordpress:
+    image: wordpress:v1
+    build: requirements/wordpress/
     depends_on:
       - mariadb
-    build: requirements/wordpress/
     container_name: wordpress
     env_file: .env
     volumes:
-      - /home/$USER/data/wordpress:/var/www/html
+      - wordpress:/var/www/html
     networks:
       - wpnetwork
 

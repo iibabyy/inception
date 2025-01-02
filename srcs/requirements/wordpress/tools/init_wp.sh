@@ -1,7 +1,20 @@
 #!/bin/bash
 
+wp_install() {
+	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	chmod +x wp-cli.phar
+	mv wp-cli.phar /usr/local/bin/wp
+	wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html
+
+	cd /var/www/html
+	tar -xzf wordpress-6.1.1.tar.gz
+	rm wordpress-6.1.1.tar.gz
+	chown -R www-data:www-data /var/www/*
+	chmod -R 755 /var/www/*
+}
+
 wp_init() {
-	# 	mkdir -p /var/www/html/wordpress
+
 	cd /var/www/html/wordpress
 
 	if ! wp core is-installed --allow-root; then
@@ -30,6 +43,8 @@ wp_init() {
 			--role=author \
 			--user_pass="$USER_PASSWORD";
 	fi
+
+	echo wp installed
 }
 
 wait_for_db() {
@@ -44,6 +59,7 @@ wait_for_db() {
 
 wait_for_db
 
+wp_install
 wp_init
 
 if [ ! -d /run/php ]; then

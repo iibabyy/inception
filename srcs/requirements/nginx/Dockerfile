@@ -1,13 +1,16 @@
-FROM nginx:stable-alpine
+FROM debian:bullseye
 
-# WORKDIR /var/www/nginx
+RUN apt update \
+&& apt install -y nginx \
+&& apt install -y openssl
 
-# COPY . /var/www/nginx
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
-RUN docker-php-ext-install mysqli
-# && apk add nginx \
+RUN openssl req -x509 -nodes -out /etc/ssl/certs/ibaby.42.crt -keyout /etc/ssl/private/ibaby.42.key -subj "/C=FR/ST=IDF/L=Paris/O=rayan/OU=42/CN=ibaby.42.fr"
 
-# EXPOSE 9000
-# EXPOSE 443
+RUN chmod 755 /var/www/html \
+&& chown -R www-data:www-data /var/www/html
+
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
