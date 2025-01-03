@@ -1,15 +1,18 @@
 services:
+
+  #   MARIADB   #
   mariadb:
     build: requirements/mariadb/
     container_name: mariadb
     env_file:
       - .env
-    restart: always
+    restart: unless-stopped
     volumes:
       - mysql:/var/lib/mysql
     networks:
       - wpnetwork
 
+  #   NGINX   #
   nginx:
     build: requirements/nginx
     container_name: nginx
@@ -22,6 +25,7 @@ services:
     networks:
       - wpnetwork
 
+  #   WORDPRESS   #
   wordpress:
     build: requirements/wordpress/
     depends_on:
@@ -30,6 +34,20 @@ services:
     env_file: .env
     volumes:
       - wordpress:/var/www/html/wordpress
+    networks:
+      - wpnetwork
+
+  #   ADMINER   #
+  adminer:
+    build: requirements/bonus/adminer/
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    container_name: adminer
+    restart: always
+    ports:
+      - 80:80
     networks:
       - wpnetwork
 

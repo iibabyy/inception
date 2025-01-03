@@ -1,17 +1,10 @@
 FROM debian:bullseye
 
-RUN apt update 
-RUN	apt -y upgrade 
-RUN	apt install -y php php7.4-fpm php-mysql 
-RUN	apt install -y curl 
-RUN	apt install -y default-mysql-client mariadb-client 
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
-RUN chmod +x wp-cli.phar 
-RUN mv wp-cli.phar /usr/local/bin/wp 
-RUN mkdir -p /run/php 
-RUN mkdir -p /var/www/html/wordpress 
-RUN chown -R www-data:www-data /var/www/html/wordpress 
-RUN chmod -R 755 /var/www/html/wordpress
+RUN apt update \
+&&	apt -y upgrade \
+&&	apt install -y php php7.4-fpm php-mysql \
+&&	apt install -y curl \
+&&	apt install -y default-mysql-client mariadb-client
 
 EXPOSE 9000
 
