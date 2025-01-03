@@ -1,6 +1,5 @@
 services:
   mariadb:
-    image: mariadb:v1
     build: requirements/mariadb/
     container_name: mariadb
     env_file:
@@ -12,7 +11,6 @@ services:
       - wpnetwork
 
   nginx:
-    image: nginx:v1
     build: requirements/nginx
     container_name: nginx
     depends_on:
@@ -20,28 +18,37 @@ services:
     ports:
       - 443:443
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     networks:
       - wpnetwork
 
   wordpress:
-    image: wordpress:v1
     build: requirements/wordpress/
     depends_on:
       - mariadb
     container_name: wordpress
     env_file: .env
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     networks:
       - wpnetwork
 
 networks:
   wpnetwork:
+    name: wpnetwork
     driver: bridge
 
 volumes:
   wordpress:
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/ibaby/data/wordpress
+
   mysql:
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/ibaby/data/mysql

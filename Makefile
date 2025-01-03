@@ -1,6 +1,8 @@
 all: up
 
 up:
+	@mkdir -p /home/ibaby/data/wordpress
+	@mkdir -p /home/ibaby/data/mysql
 	@docker compose -f srcs/docker-compose.yml up --build
 
 down:
