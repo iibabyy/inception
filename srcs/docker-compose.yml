@@ -32,6 +32,7 @@ services:
     build: requirements/wordpress/
     depends_on:
       - mariadb
+      - redis
     container_name: wordpress
     env_file: .env
     volumes:
@@ -46,10 +47,19 @@ services:
       - mariadb
     container_name: adminer
     restart: always
+    networks:
+      - wordpress-network
+
+  #   REDIS   #
+  redis:
+    # build: requirements/bonus/redis/
+    image: redis
+    container_name: redis
+    restart: always
     ports:
-      - 2000:80
-    # volumes:
-    #   - adminer-volume:/var/www/html/
+      - 6379:6379
+    expose:
+      - 6379
     networks:
       - wordpress-network
 
@@ -72,4 +82,3 @@ volumes:
       type: 'none'
       o: 'bind'
       device: /home/ibaby/data/mysql
-  adminer-volume: {}
