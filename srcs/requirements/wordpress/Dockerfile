@@ -4,7 +4,10 @@ RUN apt update \
 &&	apt -y upgrade \
 &&	apt install -y php php7.4-fpm php-mysql \
 &&	apt install -y wget \
-&&	apt install -y default-mysql-client mariadb-client
+&&	apt install -y default-mysql-client mariadb-client \
+&&	apt install -y redis-server systemctl \
+&& systemctl start redis \
+&& systemctl enable redis
 
 EXPOSE 9000
 
