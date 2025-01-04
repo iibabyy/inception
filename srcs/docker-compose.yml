@@ -10,7 +10,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql
     networks:
-      - wpnetwork
+      - wordpress-network
 
   #   NGINX   #
   nginx:
@@ -18,12 +18,14 @@ services:
     container_name: nginx
     depends_on:
       - wordpress
+      - adminer
     ports:
       - 443:443
     volumes:
+      - adminer-volume:/var/www/html/adminer
       - wordpress:/var/www/html/wordpress
     networks:
-      - wpnetwork
+      - wordpress-network
 
   #   WORDPRESS   #
   wordpress:
@@ -35,25 +37,24 @@ services:
     volumes:
       - wordpress:/var/www/html/wordpress
     networks:
-      - wpnetwork
+      - wordpress-network
 
   #   ADMINER   #
   adminer:
     build: requirements/bonus/adminer/
     depends_on:
       - mariadb
-    env_file:
-      - .env
+    env_file: .env
     container_name: adminer
     restart: always
-    ports:
-      - 80:80
+    volumes:
+      - adminer-volume:/var/www/html/adminer
     networks:
-      - wpnetwork
+      - wordpress-network
 
 networks:
-  wpnetwork:
-    name: wpnetwork
+  wordpress-network:
+    name: wordpress-network
     driver: bridge
 
 volumes:
@@ -70,3 +71,4 @@ volumes:
       type: 'none'
       o: 'bind'
       device: /home/ibaby/data/mysql
+  adminer-volume: {}
