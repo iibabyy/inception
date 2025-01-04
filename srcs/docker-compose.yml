@@ -22,8 +22,8 @@ services:
     ports:
       - 443:443
     volumes:
-      - adminer-volume:/var/www/html/adminer
       - wordpress:/var/www/html/wordpress
+      # - adminer-volume:/var/www/html/adminer
     networks:
       - wordpress-network
 
@@ -44,11 +44,12 @@ services:
     build: requirements/bonus/adminer/
     depends_on:
       - mariadb
-    env_file: .env
     container_name: adminer
     restart: always
-    volumes:
-      - adminer-volume:/var/www/html/adminer
+    ports:
+      - 2000:80
+    # volumes:
+    #   - adminer-volume:/var/www/html/
     networks:
       - wordpress-network
 
