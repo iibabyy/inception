@@ -16,9 +16,9 @@ services:
   nginx:
     build: requirements/nginx
     container_name: nginx
-    depends_on:
-      - wordpress
-      - adminer
+    # depends_on:
+    #   - wordpress
+    #   - adminer
     ports:
       - 443:443
     volumes:

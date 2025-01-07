@@ -7,4 +7,4 @@ RUN apt-get update \
 && mkdir -p /var/www/html/ \
 && chmod +x /init_adminer.sh
 
-ENTRYPOINT ["/init_adminer.sh"]
+ENTRYPOINT [ "bash", "/init_adminer.sh"]

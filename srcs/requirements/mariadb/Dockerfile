@@ -20,4 +20,4 @@ RUN chmod +x /init_db.sh \
 
 EXPOSE 3306
 
-ENTRYPOINT [ "/init_db.sh" ]
+ENTRYPOINT [ "bash", "/init_db.sh" ]
