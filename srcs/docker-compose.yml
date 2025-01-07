@@ -16,9 +16,9 @@ services:
   nginx:
     build: requirements/nginx
     container_name: nginx
-    # depends_on:
-    #   - wordpress
-    #   - adminer
+    depends_on:
+      - wordpress
+      - adminer
     ports:
       - 443:443
     volumes:
@@ -58,6 +58,21 @@ services:
     env_file: .env
     networks:
       - wordpress-network
+
+  #   FTP SERVER   #
+  ftp_server:
+    build: requirements/bonus/ftp_server/
+    depends_on:
+      - wordpress
+    container_name: ftp_server
+    restart: always
+    env_file: .env
+    volumes:
+      - wordpress:/home/vsftpd
+    ports:
+      - 47400-47470:47400-47470
+      - 21:21
+
 
 networks:
   wordpress-network:
