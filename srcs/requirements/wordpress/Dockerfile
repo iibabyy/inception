@@ -1,13 +1,10 @@
 FROM debian:bullseye
 
 RUN apt update \
-&&	apt -y upgrade \
-&&	apt install -y php php7.4-fpm php-mysql \
-&&	apt install -y wget \
-&&	apt install -y default-mysql-client mariadb-client \
-&&	apt install -y redis-server systemctl \
-&& systemctl start redis \
-&& systemctl enable redis
+	&& apt -y upgrade \
+	&& apt install -y php php7.4-fpm php-mysqli php-redis \
+	wget redis \
+	default-mysql-client mariadb-client
 
 EXPOSE 9000
 

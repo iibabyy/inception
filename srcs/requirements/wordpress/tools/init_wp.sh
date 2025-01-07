@@ -51,10 +51,7 @@ wp_init() {
 		--user_pass="$USER_PASSWORD";
 
 	wp plugin install redis-cache --activate --allow-root
-	wp config set WP_CACHE true --add
-	wp config set WP_REDIS_HOST redis --add
-	wp config set WP_REDIS_PORT 6379 --add
-	wp redis enable
+	wp redis enable --allow-root
 
 }
 

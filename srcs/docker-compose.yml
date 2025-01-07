@@ -52,10 +52,10 @@ services:
 
   #   REDIS   #
   redis:
-    # build: requirements/bonus/redis/
-    image: redis
+    build: requirements/bonus/redis/
     container_name: redis
     restart: always
+    env_file: .env
     networks:
       - wordpress-network
 
