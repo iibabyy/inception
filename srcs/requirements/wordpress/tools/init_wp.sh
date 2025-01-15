@@ -56,6 +56,9 @@ wp_init() {
 	wp plugin install redis-cache --activate --allow-root
 	wp redis enable --allow-root
 
+
+	chmod -R 755 /var/www/html/wordpress/
+	chown -R www-data:www-data /var/www/html/wordpress
 }
 
 wait_for_db() {
