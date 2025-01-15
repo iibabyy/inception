@@ -2,8 +2,9 @@ services:
 
   #   MARIADB   #
   mariadb:
-    build: requirements/mariadb/
     container_name: mariadb
+    image: mariadb
+    build: requirements/mariadb/
     env_file:
       - .env
     restart: unless-stopped
@@ -14,8 +15,9 @@ services:
 
   #   NGINX   #
   nginx:
-    build: requirements/nginx
     container_name: nginx
+    image: nginx
+    build: requirements/nginx
     depends_on:
       - wordpress
       - adminer
@@ -30,11 +32,12 @@ services:
 
   #   WORDPRESS   #
   wordpress:
+    container_name: wordpress
+    image: wordpress
     build: requirements/wordpress/
     depends_on:
       - mariadb
       - redis
-    container_name: wordpress
     env_file: .env
     volumes:
       - wordpress:/var/www/html/wordpress
@@ -43,18 +46,20 @@ services:
 
   #   ADMINER   #
   adminer:
+    container_name: adminer
+    image: adminer
     build: requirements/bonus/adminer/
     depends_on:
       - mariadb
-    container_name: adminer
     restart: always
     networks:
       - wordpress-network
 
   #   REDIS   #
   redis:
-    build: requirements/bonus/redis/
     container_name: redis
+    image: redis
+    build: requirements/bonus/redis/
     restart: always
     env_file: .env
     networks:
@@ -62,10 +67,11 @@ services:
 
   #   FTP SERVER   #
   ftp_server:
+    container_name: ftp_server
+    image: ftp_server
     build: requirements/bonus/ftp_server/
     depends_on:
       - wordpress
-    container_name: ftp_server
     restart: always
     env_file: .env
     volumes:
@@ -75,8 +81,9 @@ services:
       - 21:21
 
   ssh-server:
-    build: requirements/bonus/ssh-server/
     container_name: ssh-server
+    image: ssh-server
+    build: requirements/bonus/ssh-server/
     restart: always
     ports:
       - 22:22
