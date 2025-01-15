@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio 42</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 3rem;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .github-profile-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .github-profile-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-profile-button i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #c0392b;
+        }
+
+        .project-link i {
+            margin-left: 0.5rem;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content container">
+            <h1>Étudiant @ École 42</h1>
+            <p>Développeur Passionné | Projets Système & Web</p>
+            <a href="https://github.com/iibabyy/" class="github-profile-button">
+                <i class="fab fa-github"></i>
+                Voir mon profil GitHub
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Web Server Rust</h3>
+                <p>Implémentation d'un serveur web performant en Rust, utilisant les fonctionnalités modernes du langage.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Networking</span>
+                    <span class="tech-tag">HTTP</span>
+                </div>
+                <a href="https://github.com/iibabyy/Rust-webserv.git" class="project-link">
+                    Voir sur GitHub <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <h3>Web Server C++</h3>
+                <p>Serveur web robuste développé en C++, gérant les requêtes HTTP et le multiplexage des connexions.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Socket</span>
+                    <span class="tech-tag">HTTP</span>
+                </div>
+                <a href="https://github.com/iibabyy/webserv.git" class="project-link">
+                    Voir sur GitHub <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <h3>Inception</h3>
+                <p>Projet de conteneurisation avec Docker, mettant en place une infrastructure de services web.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">DevOps</span>
+                    <span class="tech-tag">Nginx</span>
+                </div>
+                <a href="https://github.com/iibabyy/inception.git" class="project-link">
+                    Voir sur GitHub <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <h3>Minishell</h3>
+                <p>Implémentation d'un shell basique en C, reproduisant les fonctionnalités essentielles de bash.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">C</span>
+                    <span class="tech-tag">Unix</span>
+                    <span class="tech-tag">Shell</span>
+                </div>
+                <a href="https://github.com/iibabyy/minishell_broken.git" class="project-link">
+                    Voir sur GitHub <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

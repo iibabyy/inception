@@ -23,6 +23,7 @@ services:
       - 443:443
     volumes:
       - wordpress:/var/www/html/wordpress
+      - portfolio:/var/www/html/portfolio
       # - adminer-volume:/var/www/html/adminer
     networks:
       - wordpress-network
@@ -68,11 +69,10 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - wordpress:/home/vsftpd
+      - wordpress:/vsftpd
     ports:
       - 47400-47470:47400-47470
       - 21:21
-
 
 networks:
   wordpress-network:
@@ -93,3 +93,11 @@ volumes:
       type: 'none'
       o: 'bind'
       device: /home/ibaby/data/mysql
+
+  portfolio:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/ibaby/inception/srcs/requirements/bonus/portfolio/tools/
+

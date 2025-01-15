@@ -73,5 +73,6 @@ wait_for_db() {
 
 sleep 5
 wait_for_db
+sleep 5
 wp_init
 start
