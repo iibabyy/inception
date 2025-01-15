@@ -74,6 +74,13 @@ services:
       - 47400-47470:47400-47470
       - 21:21
 
+  ssh-server:
+    build: requirements/bonus/ssh-server/
+    container_name: ssh-server
+    restart: always
+    ports:
+      - 22:22
+
 networks:
   wordpress-network:
     name: wordpress-network
